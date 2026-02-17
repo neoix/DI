@@ -1,0 +1,12 @@
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\bin\Debug\net10.0\DI.ServiceDefaults.deps.json
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\bin\Debug\net10.0\DI.ServiceDefaults.dll
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\bin\Debug\net10.0\DI.ServiceDefaults.pdb
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\DI.ServiceDefaults.csproj.AssemblyReference.cache
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\DI.ServiceDefaults.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\DI.ServiceDefaults.AssemblyInfoInputs.cache
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\DI.ServiceDefaults.AssemblyInfo.cs
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\DI.ServiceDefaults.csproj.CoreCompileInputs.cache
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\DI.ServiceDefaults.dll
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\refint\DI.ServiceDefaults.dll
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\DI.ServiceDefaults.pdb
+C:\Users\oamra\source\repos\DI\DI.ServiceDefaults\obj\Debug\net10.0\ref\DI.ServiceDefaults.dll

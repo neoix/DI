@@ -1,0 +1,135 @@
+[
+  {
+    "searchRequest": {
+      "query": "company name registered address insured organization principal address",
+      "topK": 10
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "companyName": {
+          "type": "string",
+          "description": "Legal name of the insured or entity referenced in the document."
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "zip": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "street",
+            "city",
+            "state",
+            "zip",
+            "country"
+          ]
+        },
+        "normalizedAddress": {
+          "type": "string",
+          "description": "Full address in a single-line normalized format."
+        }
+      },
+      "required": [
+        "companyName",
+        "address"
+      ]
+    }
+  },
+  {
+    "searchRequest": {
+      "query": "policy number inception date expiration date policy period premium amount",
+      "topK": 10
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "policyNumber": {
+          "type": "string",
+          "description": "Unique identifier of the insurance policy."
+        },
+        "inceptionDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Policy start date."
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Policy end date."
+        },
+        "premium": {
+          "type": "number",
+          "description": "Premium amount formatted as 0.00."
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency code or symbol associated with the premium."
+        }
+      },
+      "required": [
+        "policyNumber",
+        "inceptionDate",
+        "expirationDate",
+        "premium",
+        "currency"
+      ]
+    }
+  },
+  {
+    "searchRequest": {
+      "query": "insurance sublimits coverage limits per claim per event aggregate limit subcoverage limit monetary cap",
+      "topK": 100
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "sublimits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name or description of the insurance sublimit."
+              },
+              "limitAmount": {
+                "type": "number",
+                "description": "Monetary value of the sublimit formatted as 0.00."
+              },
+              "currency": {
+                "type": "string",
+                "description": "Currency symbol or code for the limit amount."
+              },
+              "limitType": {
+                "type": "string",
+                "description": "Type of limit (per claim, per event, aggregate, shared, excess)."
+              }
+            },
+            "required": [
+              "name",
+              "limitAmount",
+              "currency"
+            ]
+          }
+        }
+      },
+      "required": [
+        "sublimits"
+      ]
+    }
+  }
+]

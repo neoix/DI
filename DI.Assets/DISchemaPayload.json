@@ -1,0 +1,487 @@
+[
+  {
+    "searchRequest": {
+      "query": "inception date",
+      "useSynonyms": true,
+      "topK": 5
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "inception_date": {
+          "type": "object",
+          "properties": {
+            "extracted_date": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted inception date without any normalization."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the inception date was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "formatted_date": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Normalize extracted dates to ISO format (YYYY-MM-DD). If the extracted date is incomplete (e.g., only month and year are available), apply reasonable assumptions to fill in the missing components (e.g., default to the first day of the month or year) and indicate any assumptions made in the confidence score or an additional field."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "Should be empty as the formatted date is derived from the extracted date, which already has page information."
+                },
+                "conf_score": {
+                  "type": "number",
+                  "description": "Should be null."
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "extracted_time": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted inception time without any normalization."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the inception time was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "formatted_time": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "format": "time",
+                  "description": "Normalize extracted times to ISO format (hh:mm:ss). If the extracted time is incomplete (e.g., only hour and minute are available), apply reasonable assumptions to fill in the missing components (e.g., default to 00 seconds) and indicate any assumptions made in the confidence score or an additional field."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "Should be empty as the formatted time is derived from the extracted time, which already has page information."
+                },
+                "conf_score": {
+                  "type": "number",
+                  "description": "Should be null."
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "timezone": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted inception timezone information, which may include timezone abbreviations (e.g., PST, EST) or offsets (e.g., UTC-8)."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the inception timezone information was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            }
+          },
+          "required": [
+            "extracted_date",
+            "formatted_date",
+            "extracted_time",
+            "formatted_time",
+            "timezone"
+          ]
+        }     
+      },
+      "required": [
+        "inception_date"
+      ]
+    }
+  },
+  {
+    "searchRequest": {
+      "query": "expiration date",
+      "useSynonyms": true,
+      "topK": 5
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "expiration_date": {
+          "type": "object",
+          "properties": {
+            "extracted_date": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted expiration date without any normalization."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the expiration date was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "formatted_date": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Normalize extracted dates to ISO format (YYYY-MM-DD). If the extracted date is incomplete (e.g., only month and year are available), apply reasonable assumptions to fill in the missing components (e.g., default to the first day of the month or year) and indicate any assumptions made in the confidence score or an additional field."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "Should be empty as the formatted date is derived from the extracted date, which already has page information."
+                },
+                "conf_score": {
+                  "type": "number",
+                  "description": "Should be null."
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "extracted_time": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted expiration time without any normalization."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the expiration time was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "formatted_time": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "format": "time",
+                  "description": "Normalize extracted times to ISO format (hh:mm:ss). If the extracted time is incomplete (e.g., only hour and minute are available), apply reasonable assumptions to fill in the missing components (e.g., default to 00 seconds) and indicate any assumptions made in the confidence score or an additional field."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "Should be empty as the formatted time is derived from the extracted time, which already has page information."
+                },
+                "conf_score": {
+                  "type": "number",
+                  "description": "Should be null."
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            },
+            "timezone": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted expiration timezone information, which may include timezone abbreviations (e.g., PST, EST) or offsets (e.g., UTC-8)."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the expiration timezone information was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+              ]
+            }
+          },
+          "required": [
+            "extracted_date",
+            "formatted_date",
+            "extracted_time",
+            "formatted_time",
+            "timezone"
+          ]
+        }     
+      },
+      "required": [
+        "expiration_date"
+      ]
+    }
+  },
+  {
+    "searchRequest": {
+      "query": "company name",
+      "useSynonyms": true,
+      "topK": 5
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "main_insured": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted name of the main insured party."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the main insured name was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+               ]
+            },
+            "address": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted address of the main insured party."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the main insured address was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+               ]
+            },
+            "country": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The extracted country of the main insured party."
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "The list of page numbers where the main insured country was extracted from."
+                },
+                "conf_score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "pages",
+                "conf_score"
+               ]
+            }
+          },
+          "required": [
+            "name",
+            "address",
+            "country"
+          ]
+        },
+        "additional_insureds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "The extracted name of an additional insured party."
+                  },
+                  "pages": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "The list of page numbers where the additional insured name was extracted from."
+                  },
+                  "conf_score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "pages",
+                  "conf_score"
+                ]
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "The extracted address of an additional insured party."
+                  },
+                  "pages": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "The list of page numbers where the additional insured address was extracted from."
+                  },
+                  "conf_score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "pages",
+                  "conf_score"
+                 ]
+              },
+              "country": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "The extracted country of an additional insured party."
+                  },
+                  "pages": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "The list of page numbers where the additional insured country was extracted from."
+                  },
+                  "conf_score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "pages",
+                  "conf_score"
+                 ]
+              }
+            },
+            "required": [
+              "name",
+              "address",
+              "country"
+            ]
+          }
+        }        
+      },
+      "required": [
+        "main_insured",
+        "additional_insureds"
+      ]
+    }
+  }
+]

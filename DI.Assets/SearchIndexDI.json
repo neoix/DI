@@ -1,0 +1,93 @@
+{
+  "name": "di-index",
+  "fields": [
+    {
+      "name": "id",
+      "type": "Edm.String",
+      "key": true,
+      "filterable": true,
+      "sortable": true,
+      "retrievable": true,
+      "stored": true
+    },
+    {
+      "name": "documentId",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "retrievable": true,
+      "stored": true
+    },
+    {
+      "name": "text",
+      "type": "Edm.String",
+      "searchable": true,
+      "retrievable": true,
+      "stored": true
+    },
+    {
+      "name": "pageNumbers",
+      "type": "Collection(Edm.Int32)",
+      "filterable": true,
+      "retrievable": true,
+      "stored": true
+    },
+    {
+      "name": "metadataBlobUrl",
+      "type": "Edm.String",
+      "searchable": false,
+      "retrievable": true,
+      "stored": true
+    },
+    {
+      "name": "embedding",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "retrievable": true,
+      "stored": true,
+      "dimensions": 1536,
+      "vectorSearchProfile": "vector-profile"
+    }
+  ],
+
+  "similarity": {
+    "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
+  },
+
+  "semantic": {
+    "configurations": [
+      {
+        "name": "default",
+        "rankingOrder": "BoostedRerankerScore",
+        "prioritizedFields": {
+          "titleField": { "fieldName": "documentId" },
+          "prioritizedContentFields": [
+            { "fieldName": "text" }
+          ]
+        }
+      }
+    ]
+  },
+
+  "vectorSearch": {
+    "algorithms": [
+      {
+        "name": "hnsw-algo",
+        "kind": "hnsw",
+        "hnswParameters": {
+          "metric": "cosine",
+          "m": 4,
+          "efConstruction": 400,
+          "efSearch": 500
+        }
+      }
+    ],
+    "profiles": [
+      {
+        "name": "vector-profile",
+        "algorithm": "hnsw-algo"
+      }
+    ]
+  }
+}

@@ -1,0 +1,206 @@
+[
+  {
+    "searchRequest": {
+      "query": "Policy details: submission number, share to quote, profit center, producer type, premium payment warranty, LOB MDM, industry segment, date received.",
+      "documentId": "{{documentId}}",
+      "topK": 10
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "policy": {
+          "type": "object",
+          "properties": {
+            "submission_number": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "page": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "page"
+              ]
+            },
+            "share_to_quote": {
+              "type": "object",
+              "description": "Represents quote to share or participation in percentage without the % sign",
+              "properties": {
+                "value": {
+                  "type": "number"
+                },
+                "page": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "page"
+              ]
+            },
+            "profit_center": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "page": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "page"
+              ]
+            },
+            "producer_type": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "page": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "page"
+              ]
+            },
+            "premium_payment_warranty": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "page": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "page"
+              ]
+            },
+            "lob_mdm": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "page": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "page"
+              ]
+            },
+            "industry_segment": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "page": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "value",
+                "page"
+              ]
+            },
+            "date_received": {
+              "type": "object",
+              "properties": {
+                "extracted_date": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "description": "The date as extracted from the document, in its original format"
+                    },
+                    "page": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "page"
+                  ]
+                },
+                "formatted_date": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "description": "The date reformatted to DD.MM.YYYY"
+                    },
+                    "page": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "page"
+                  ]
+                }
+              },
+              "required": [
+                "extracted_date",
+                "formatted_date"
+              ]
+            }
+          },
+          "required": [
+            "submission_number",
+            "share_to_quote",
+            "profit_center",
+            "producer_type",
+            "premium_payment_warranty",
+            "lob_mdm",
+            "industry_segment",
+            "date_received"
+          ]
+        }
+      },
+      "required": [
+        "policy"
+      ]
+    }
+  }
+]
