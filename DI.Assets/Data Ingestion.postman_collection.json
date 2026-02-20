@@ -1,0 +1,251 @@
+{
+  "info": {
+    "_postman_id": "00440f1a-4a8a-4ac4-9bbc-d8029b081086",
+    "name": "Data Ingestion",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "437904"
+  },
+  "item": [
+    {
+      "name": "Upload Document",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "const documentId = response.documentId;\r",
+              "pm.collectionVariables.set(\"documentId\", documentId);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "multipart/form-data",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "uuid": "3e14c516-8181-4feb-8b02-7bebf69f135b",
+              "src": "postman-cloud:///1f0f798a-661c-43c0-ae36-151425ecb371"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/upload",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "upload"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check Ingestion Status",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/status/{{documentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "status",
+            "{{documentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"query\": \"start date\",\r\n  \"useSynonyms\": true,\r\n  \"topK\": 5\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/search/{{documentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "search",
+            "{{documentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Extract",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"searchRequest\": {\r\n      \"query\": \"expiration date\",\r\n      \"useSynonyms\": true,\r\n      \"topK\": 5\r\n    },\r\n    \"schema\": {\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"expiration_date\": {\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"extracted_date\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted expiration date without any normalization.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the expiration date was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"formatted_date\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"format\": \"date\",\r\n                  \"description\": \"Normalize extracted dates to ISO format (YYYY-MM-DD). If the extracted date is incomplete (e.g., only month and year are available), apply reasonable assumptions to fill in the missing components (e.g., default to the first day of the month or year) and indicate any assumptions made in the confidence score or an additional field.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"Should be empty as the formatted date is derived from the extracted date, which already has page information.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\",\r\n                  \"description\": \"Should be null.\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"extracted_time\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted expiration time without any normalization.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the expiration time was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"formatted_time\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"format\": \"time\",\r\n                  \"description\": \"Normalize extracted times to ISO format (hh:mm:ss). If the extracted time is incomplete (e.g., only hour and minute are available), apply reasonable assumptions to fill in the missing components (e.g., default to 00 seconds) and indicate any assumptions made in the confidence score or an additional field.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"Should be empty as the formatted time is derived from the extracted time, which already has page information.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\",\r\n                  \"description\": \"Should be null.\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"timezone\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted expiration timezone information, which may include timezone abbreviations (e.g., PST, EST) or offsets (e.g., UTC-8).\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the expiration timezone information was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            }\r\n          },\r\n          \"required\": [\r\n            \"extracted_date\",\r\n            \"formatted_date\",\r\n            \"extracted_time\",\r\n            \"formatted_time\",\r\n            \"timezone\"\r\n          ]\r\n        }     \r\n      },\r\n      \"required\": [\r\n        \"expiration_date\"\r\n      ]\r\n    }\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/extract/{{documentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "extract",
+            "{{documentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Extract Bulk",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "const extractionId = response.extractionId;\r",
+              "pm.collectionVariables.set(\"extractionId\", extractionId);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {\r\n    \"searchRequest\": {\r\n      \"query\": \"inception date\",\r\n      \"useSynonyms\": true,\r\n      \"topK\": 5\r\n    },\r\n    \"schema\": {\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"inception_date\": {\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"extracted_date\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted inception date without any normalization.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the inception date was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"formatted_date\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"format\": \"date\",\r\n                  \"description\": \"Normalize extracted dates to ISO format (YYYY-MM-DD). If the extracted date is incomplete (e.g., only month and year are available), apply reasonable assumptions to fill in the missing components (e.g., default to the first day of the month or year) and indicate any assumptions made in the confidence score or an additional field.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"Should be empty as the formatted date is derived from the extracted date, which already has page information.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\",\r\n                  \"description\": \"Should be null.\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"extracted_time\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted inception time without any normalization.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the inception time was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"formatted_time\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"format\": \"time\",\r\n                  \"description\": \"Normalize extracted times to ISO format (hh:mm:ss). If the extracted time is incomplete (e.g., only hour and minute are available), apply reasonable assumptions to fill in the missing components (e.g., default to 00 seconds) and indicate any assumptions made in the confidence score or an additional field.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"Should be empty as the formatted time is derived from the extracted time, which already has page information.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\",\r\n                  \"description\": \"Should be null.\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"timezone\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted inception timezone information, which may include timezone abbreviations (e.g., PST, EST) or offsets (e.g., UTC-8).\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the inception timezone information was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            }\r\n          },\r\n          \"required\": [\r\n            \"extracted_date\",\r\n            \"formatted_date\",\r\n            \"extracted_time\",\r\n            \"formatted_time\",\r\n            \"timezone\"\r\n          ]\r\n        }     \r\n      },\r\n      \"required\": [\r\n        \"inception_date\"\r\n      ]\r\n    }\r\n  },\r\n  {\r\n    \"searchRequest\": {\r\n      \"query\": \"expiration date\",\r\n      \"useSynonyms\": true,\r\n      \"topK\": 5\r\n    },\r\n    \"schema\": {\r\n      \"type\": \"object\",\r\n      \"properties\": {\r\n        \"expiration_date\": {\r\n          \"type\": \"object\",\r\n          \"properties\": {\r\n            \"extracted_date\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted expiration date without any normalization.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the expiration date was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"formatted_date\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"format\": \"date\",\r\n                  \"description\": \"Normalize extracted dates to ISO format (YYYY-MM-DD). If the extracted date is incomplete (e.g., only month and year are available), apply reasonable assumptions to fill in the missing components (e.g., default to the first day of the month or year) and indicate any assumptions made in the confidence score or an additional field.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"Should be empty as the formatted date is derived from the extracted date, which already has page information.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\",\r\n                  \"description\": \"Should be null.\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"extracted_time\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted expiration time without any normalization.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the expiration time was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"formatted_time\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"format\": \"time\",\r\n                  \"description\": \"Normalize extracted times to ISO format (hh:mm:ss). If the extracted time is incomplete (e.g., only hour and minute are available), apply reasonable assumptions to fill in the missing components (e.g., default to 00 seconds) and indicate any assumptions made in the confidence score or an additional field.\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"Should be empty as the formatted time is derived from the extracted time, which already has page information.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\",\r\n                  \"description\": \"Should be null.\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            },\r\n            \"timezone\": {\r\n              \"type\": \"object\",\r\n              \"properties\": {\r\n                \"value\": {\r\n                  \"type\": \"string\",\r\n                  \"description\": \"The extracted expiration timezone information, which may include timezone abbreviations (e.g., PST, EST) or offsets (e.g., UTC-8).\"\r\n                },\r\n                \"pages\": {\r\n                  \"type\": \"array\",\r\n                  \"items\": {\r\n                    \"type\": \"integer\"\r\n                  },\r\n                  \"description\": \"The list of page numbers where the expiration timezone information was extracted from.\"\r\n                },\r\n                \"conf_score\": {\r\n                  \"type\": \"number\"\r\n                }\r\n              },\r\n              \"required\": [\r\n                \"value\",\r\n                \"pages\",\r\n                \"conf_score\"\r\n              ]\r\n            }\r\n          },\r\n          \"required\": [\r\n            \"extracted_date\",\r\n            \"formatted_date\",\r\n            \"extracted_time\",\r\n            \"formatted_time\",\r\n            \"timezone\"\r\n          ]\r\n        }     \r\n      },\r\n      \"required\": [\r\n        \"expiration_date\"\r\n      ]\r\n    }\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/extract/bulk/{{documentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "extract",
+            "bulk",
+            "{{documentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check Extraction Bulk Status",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/status/{{extractionId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "status",
+            "{{extractionId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "documentId",
+      "value": ""
+    },
+    {
+      "key": "extractionId",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
